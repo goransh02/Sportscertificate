@@ -7,7 +7,6 @@ var res = str.split("_");
 var x1= parseInt(res[1]);
 var y1= parseInt(res[2]);
 var s1= parseInt(res[3]);
-console.log(x1+" "+y1+" "+s1+" "+res[0])
 submitBtn.addEventListener("click", () => {
     const val =userName.value;
     if (val.trim() !== "" && userName.checkValidity()) {
