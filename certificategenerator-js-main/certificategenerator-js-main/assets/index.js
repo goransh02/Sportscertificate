@@ -1,8 +1,7 @@
 const userName = document.getElementById("name");
-
 const submitBtn = document.getElementById("submitBtn");
 const { PDFDocument, rgb, degrees } = PDFLib;
-var str = "Rubrix_200_230_45";
+var str = "Rubrix_250_230_45";
 var res = str.split("_");
 var x1= parseInt(res[1]);
 var y1= parseInt(res[2]);
@@ -11,14 +10,15 @@ submitBtn.addEventListener("click", () => {
     const val =userName.value;
     if (val.trim() !== "" && userName.checkValidity()) {
         // console.log(val);
-        generatePDF(val);
+        generatePDF(val,"./assets/Rubrix_250_230_45.pdf");
       } else {
         userName.reportValidity();
       }
 });
+const generatePDF = async (name,loc) => {
+    
 
-const generatePDF = async (name) => {
-    const existingPdfBytes = await fetch("./assets/Rubrix_200_230_45.pdf").then((res) =>
+    const existingPdfBytes = await fetch(loc).then((res) =>
       res.arrayBuffer()
     );
 
@@ -34,17 +34,29 @@ const generatePDF = async (name) => {
      // Get the first page of the document
      const pages = pdfDoc.getPages();
      const firstPage = pages[0];
-   
-     // Draw a string of text diagonally across the first page
+     
+    
+    let t2=name;
+    const { width, height } = firstPage.getSize();
+    console.log(width);
+    w=t2.length;
+    // Draw a string of text diagonally across the first page
+
      firstPage.drawText(name, {
-       x: x1,
+       
+       x: (width-27*w)/2,
        y: y1,
        size: s1,
        font:  Montserrat,
        
-       color: rgb(0.0, 0.0, 0.0),
+     
+    //(PAGE_WIDTH - getStringWidth('Centered', 48)) / 2,
+    
+    colorRgb: [1, 0, 0],
+       
      });
-   
+     console.log(t2.length);
+     
     // Serialize the PDFDocument to bytes (a Uint8Array)
     const pdfDataUri = await pdfDoc.saveAsBase64({ dataUri: true });
     var t=res[0];
